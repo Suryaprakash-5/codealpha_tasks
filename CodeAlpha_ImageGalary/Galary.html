@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: rgb(222, 240, 236);
+            font-family: Arial, sans-serif;
+        }
+
+        .title {
+            background-color: aqua;
+            text-align: center;
+            padding: 10px 20px;
+        }
+
+        .filters {
+            background-color: rgb(161, 101, 216);
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .filter-btn.active {
+            background-color: aqua;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .images {
+            max-width: 1200px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(184, 187, 209, 0.4);
+        }
+
+        .images img.hidden {
+            display: none;
+        }
+
+        .bigimg {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .bigimg.active {
+            display: flex;
+        }
+
+        .bigimg img {
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+
+        .bigimg span {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .bigimg span:hover {
+            color: #ff6b6b;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Image Gallery</h1>
+    
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="animals">Animals</button>
+        <button class="filter-btn" data-filter="nature">Nature</button>
+        <button class="filter-btn" data-filter="sport">Sport</button>
+        <button class="filter-btn" data-filter="food">Food</button>
+    </div>
+
+    <div class="bigimg" id="bigimgbox">
+        <img class="imgbox" src="" id="imgebox" alt="Full view">
+        <span onclick="closefullimg()">X</span>
+    </div>
+
+    <div class="images">
+        <img class="imgbox" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400" data-category="sport" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZl1B-iS1VDit60FPpERihwXW2prvm_JKDAg&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" data-category="food" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyvabrQcIcP44dw0kovNzLpa6OZkqYbubrMw&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcuxHZa3v-lXfJ7pht9asToYn0T2iaDZYC-Q&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZfxEBNLiKkGrKjkR059J6que2BiVoUbW81Q&s" data-category="food" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkSSsdsFDRblO8zsfX38naZNDclvII5g_kuQ&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7UMOEKMIb5bxcksSFusblL1qGtmch5Th81g&s" data-category="nature" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNp3f8u2Tm84-JWEHaEWRmBS4L8pQSgwfREw&s" data-category="sport" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqst-i03uUsV9jPKB2qZ7uSpU7ec_oBRyjZQ&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCtyRw_qEZgTn7LnFeYM_V7biKTve62xYQCg&s" data-category="food" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcK5VoNWbUHwxWAVEuGHWwNiKSJWEZb11NiQ&s" data-category="animals" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHv3OOODVVKVc5px_CmZUFwoREbTuLm0Llkg&s" data-category="nature" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlj9ztDD7Cs1v00C18DFjxuoFmh_lmarhsMw&s" data-category="food" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQytpkzrTTpuyrXaRzT-HlbfATAuWUAqByElw&s" data-category="sport" onclick="bigimg(this.src)">
+        <img class="imgbox" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiamKY-e-CQ-3sgQf5IjHB2bmVFKr9280YPA&s" data-category="food" onclick="bigimg(this.src)">
+    </div>
+
+    <script>
+        let bigimgbox = document.getElementById("bigimgbox");
+        let imgebox = document.getElementById("imgebox");
+        let filterBtns = document.querySelectorAll(".filter-btn");
+        let images = document.querySelectorAll(".images img");
+
+        function bigimg(pic) {
+            imgebox.src = pic;
+            bigimgbox.classList.add("active");
+        }
+
+        function closefullimg() {
+            bigimgbox.classList.remove("active");
+        }
+
+        // Close modal by clicking outside the image
+        bigimgbox.addEventListener("click", function (e) {
+            if (e.target === bigimgbox) {
+                closefullimg();
+            }
+        });
+
+        // Close with Escape key
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                closefullimg();
+            }
+        });
+
+        // Filtering functionality
+        filterBtns.forEach((btn) => {
+            btn.addEventListener("click", function () {
+                filterBtns.forEach((b) => b.classList.remove("active"));
+                this.classList.add("active");
+
+                let category = this.getAttribute("data-filter");
+
+                images.forEach((img) => {
+                    if (category === "all") {
+                        img.classList.remove("hidden");
+                    } else {
+                        if (img.getAttribute("data-category") === category) {
+                            img.classList.remove("hidden");
+                        } else {
+                            img.classList.add("hidden");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
